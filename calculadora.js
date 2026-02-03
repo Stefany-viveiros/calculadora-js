@@ -4,24 +4,29 @@ let primeiroNumero = "";
 let operador = "";
 let segundoNumero = "";
 
-// adiciona números no display
 function addNumber(numero) {
+    if (numero === "." && (operador === "" ? primeiroNumero.includes(".") : segundoNumero.includes("."))) return;
+
     if (operador === "") {
         primeiroNumero += numero;
-        display.value = primeiroNumero;
     } else {
         segundoNumero += numero;
-        display.value = segundoNumero;
     }
+
+    updateDisplay();
 }
 
-// adiciona operador (+ - * /)
 function addOperator(op) {
     if (primeiroNumero === "") return;
+
+    if (operador !== "" && segundoNumero !== "") {
+        calculate();
+    }
+
     operador = op;
+    updateDisplay();
 }
 
-// limpa tudo
 function clearDisplay() {
     primeiroNumero = "";
     operador = "";
@@ -29,7 +34,6 @@ function clearDisplay() {
     display.value = "";
 }
 
-// faz o cálculo
 function calculate() {
     if (primeiroNumero === "" || segundoNumero === "") return;
 
@@ -37,25 +41,19 @@ function calculate() {
     const num2 = Number(segundoNumero);
     let resultado = 0;
 
-    if (operador === "+") {
-        resultado = num1 + num2;
-    } 
-    else if (operador === "-") {
-        resultado = num1 - num2;
-    } 
-    else if (operador === "*") {
-        resultado = num1 * num2;
-    } 
-    else if (operador === "/") {
-        if (num2 === 0) {
-            resultado = "Erro";
-        } else {
-            resultado = num1 / num2;
-        }
+    switch (operador) {
+        case "+": resultado = num1 + num2; break;
+        case "-": resultado = num1 - num2; break;
+        case "*": resultado = num1 * num2; break;
+        case "/": resultado = num2 === 0 ? "Erro" : num1 / num2; break;
     }
 
-    display.value = resultado;
     primeiroNumero = resultado.toString();
     segundoNumero = "";
     operador = "";
+    display.value = primeiroNumero;
+}
+
+function updateDisplay() {
+    display.value = primeiroNumero + operador + segundoNumero;
 }
