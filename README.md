@@ -1,4 +1,5 @@
 # Calculadora em JavaScript
+Acesse online: https://projetocalculadoraportifolio.netlify.app/
 
 Projeto desenvolvido durante meus estudos, com o objetivo de praticar lógica de programação e desenvolvimento web.
 
